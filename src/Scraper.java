@@ -2,7 +2,6 @@
 // 12/5/2017
 // CIS 283
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -61,20 +60,16 @@ public class Scraper
                 end = i;
                 break;
             }
-
         }
         return str.substring(beg, end);
     }
     public static void main(String[] args){
 
-
         String url = "https://www.si.com/college-football/stats";
 
         try{
 
-
-            URL            u = new URL(url);   // Analogous to FILE
-
+            URL            u = new URL(url);
             HttpURLConnection c = (HttpURLConnection) u.openConnection();
             c.connect();
             Scanner        s = new Scanner(c.getInputStream());
@@ -92,33 +87,24 @@ public class Scraper
             while (s.hasNextLine()){
 
                 String test = s.nextLine();
-
                 String[] strarray = test.split("\\s+");
-                //String[] strarray = test.split("\"");
-
-                String teamName = "";
+                String teamName;
                 boolean foundPlayer = false;
                 boolean foundFirstName = false;
                 boolean foundTeamName = false;
 
-
                 for(String str: strarray){
                     if( str.equals("class=\"player-link\"")) {
                         foundPlayer = true;
-                        //System.out.println(str);
-
                     }
                     else if(foundPlayer){
                         playerName = str;
-                        //System.out.println(playerName);
                         playerName = playerName.substring(7);
                         foundPlayer = false;
                         foundFirstName = true;
                     }
                     else if (foundFirstName){
                         playerName = playerName + " " + str;
-                        //System.out.println(playerName);
-                        //playerStatsDict.put(playerName, null);
                         foundFirstName = false;
                     }
 
@@ -146,7 +132,7 @@ public class Scraper
                                 break;
                             }
                         }
-                        //System.out.println(teamName);
+
                         playerStatsList.add(teamName);
                         foundTeamName = false;
                         foundCompletions = true;
@@ -154,11 +140,11 @@ public class Scraper
                     }
 
                     else if (foundCompletions){
-                        //System.out.println("test");
+
                         String testString = str.replaceAll("[0-9]+", "");
                         //.out.println(testString);
                         if(testString.equals("data-abbreviation=\"COMP\"></td>")){
-                            //System.out.println(getNumbersFromString(str));
+
                             playerStatsList.add(getNumbersFromString(str));
                             foundCompletions = false;
                             foundAttempts = true;
@@ -169,7 +155,7 @@ public class Scraper
                     else if (foundAttempts){
                         String testString = str.replaceAll("[0-9]+", "");
                         if (testString.equals("data-abbreviation=\"ATT\"></td>")) {
-                            //System.out.println(getNumbersFromString(str));
+
                             playerStatsList.add(getNumbersFromString(str));
                             foundAttempts = false;
                             foundCompPerc = true;
@@ -178,7 +164,7 @@ public class Scraper
                     else if (foundCompPerc){
                         String testString = str.replaceAll("(\\d+(?:\\.\\d+)?)", "");
                         if (testString.equals("data-abbreviation=\"COMP%\"></td>")) {
-                            //System.out.println(getNumbersFromString(str));
+
                             playerStatsList.add(getNumbersFromString(str));
                             foundCompPerc = false;
                             foundYards = true;
@@ -187,7 +173,7 @@ public class Scraper
                     else if (foundYards){
                         String testString = str.replaceAll("[0-9]+", "");
                         if (testString.equals("data-abbreviation=\"YDS\"></td>")) {
-                            //System.out.println(getNumbersFromString(str));
+
                             playerStatsList.add(getNumbersFromString(str));
                             foundYards = false;
                             foundYardsPerAttempt = true;
@@ -196,7 +182,7 @@ public class Scraper
                     else if (foundYardsPerAttempt){
                         String testString = str.replaceAll("(\\d+(?:\\.\\d+)?)", "");
                         if (testString.equals("data-abbreviation=\"YDS/ATT\"></td>")) {
-                            //System.out.println(getNumbersFromString(str));
+
                             playerStatsList.add(getNumbersFromString(str));
                             foundYardsPerAttempt = false;
                             foundYardsPerGame = true;
@@ -205,7 +191,7 @@ public class Scraper
                     else if (foundYardsPerGame){
                         String testString = str.replaceAll("(\\d+(?:\\.\\d+)?)", "");
                         if (testString.equals("data-abbreviation=\"YDS/G\"></td>")) {
-                            //System.out.println(getNumbersFromString(str));
+
                             playerStatsList.add(getNumbersFromString(str));
                             foundYardsPerGame = false;
                             foundTouchDowns = true;
@@ -214,7 +200,7 @@ public class Scraper
                     else if (foundTouchDowns){
                         String testString = str.replaceAll("[0-9]+", "");
                         if (testString.equals("data-abbreviation=\"TD\"></td>")) {
-                            //System.out.println(getNumbersFromString(str));
+
                             playerStatsList.add(getNumbersFromString(str));
                             foundTouchDowns = false;
                             foundInterceptions = true;
@@ -223,7 +209,7 @@ public class Scraper
                     else if (foundInterceptions){
                         String testString = str.replaceAll("[0-9]+", "");
                         if (testString.equals("data-abbreviation=\"INT\"></td>")) {
-                            //System.out.println(getNumbersFromString(str));
+
                             playerStatsList.add(getNumbersFromString(str));
                             foundInterceptions = false;
                             foundPasserRating = true;
@@ -232,7 +218,7 @@ public class Scraper
                     else if (foundPasserRating){
                         String testString = str.replaceAll("(\\d+(?:\\.\\d+)?)", "");
                         if (testString.equals("data-abbreviation=\"RATE\"></td>")) {
-                            //System.out.println(getNumbersFromString(str));
+
                             playerStatsList.add(getNumbersFromString(str));
                             foundPasserRating = false;
 
@@ -241,10 +227,7 @@ public class Scraper
                                     playerStatsList.get(4), playerStatsList.get(5), playerStatsList.get(6), playerStatsList.get(7), playerStatsList.get(8), playerStatsList.get(9));
                             playerNamesList.add(playerName);
                             playerStatsDict.put(playerName, player);
-                            //System.out.println(playerStatsDict.size());
 
-                            //System.out.println(tempList);
-                            //System.out.println(playerStatsDict.get(playerName));
                             playerName = "";
                             playerStatsList.clear();
 
@@ -362,11 +345,12 @@ public class Scraper
 
         // Sorts by passer rating
         for(int i = 1; i < playerNamesList.size();i++){
-            if( Double.compare(Double.parseDouble(playerStatsDict.get(playerNamesList.get(i)).passerRating), Double.parseDouble(playerStatsDict.get(playerNamesList.get(i-1)).passerRating) )>0){
+            if( Double.compare(Double.parseDouble(playerStatsDict.get(playerNamesList.get(i)).passerRating),
+                    Double.parseDouble(playerStatsDict.get(playerNamesList.get(i-1)).passerRating) )>0){
+
                 String temp = playerNamesList.get(i-1);
                 playerNamesList.set( i-1, playerNamesList.get(i) );
                 playerNamesList.set( i, temp );
-
             }
         }
 
