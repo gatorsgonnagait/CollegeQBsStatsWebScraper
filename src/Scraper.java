@@ -343,13 +343,17 @@ public class Scraper
 
 
         // Sorts by passer rating
-        for(int i = 1; i < playerNamesList.size();i++){
-            if( Double.compare(Double.parseDouble(playerStatsDict.get(playerNamesList.get(i)).passerRating),
-                    Double.parseDouble(playerStatsDict.get(playerNamesList.get(i-1)).passerRating) )>0){
+        for(int i = 0; i < playerNamesList.size();i++){
 
-                String temp = playerNamesList.get(i-1);
-                playerNamesList.set( i-1, playerNamesList.get(i) );
-                playerNamesList.set( i, temp );
+            for(int j = i+1; j < playerNamesList.size(); j++) {
+
+                if (Double.compare(Double.parseDouble(playerStatsDict.get(playerNamesList.get(i)).passerRating),
+                        Double.parseDouble(playerStatsDict.get(playerNamesList.get(j)).passerRating)) < 0) {
+
+                    String temp = playerNamesList.get(j);
+                    playerNamesList.set(j, playerNamesList.get(i));
+                    playerNamesList.set(i, temp);
+                }
             }
         }
 
