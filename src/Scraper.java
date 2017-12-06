@@ -142,7 +142,6 @@ public class Scraper
                     else if (foundCompletions){
 
                         String testString = str.replaceAll("[0-9]+", "");
-                        //.out.println(testString);
                         if(testString.equals("data-abbreviation=\"COMP\"></td>")){
 
                             playerStatsList.add(getNumbersFromString(str));
@@ -359,8 +358,6 @@ public class Scraper
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                //System.out.println("test");
-                //System.out.println(rowList.getSelectedValue());
                 label11.setText(playerStatsDict.get(rowList.getSelectedValue()).team);
                 label12.setText(playerStatsDict.get(rowList.getSelectedValue()).completions);
                 label13.setText(playerStatsDict.get(rowList.getSelectedValue()).attempts);
